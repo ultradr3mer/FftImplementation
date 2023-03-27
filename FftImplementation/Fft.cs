@@ -57,7 +57,7 @@ namespace FftImplementation
       return top.Concat(bottom).ToArray();
     }
 
-    internal Complex[] Inverse(Complex[] wave)
+    internal Complex[] Imvert(Complex[] wave)
     {
       return this.Transform(wave).Select(value => value / size).ToArray();
     }
