@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Numerics;
 
-namespace FftImplementation
+namespace Fft.Wpf.Services
 {
   internal class Fft
   {
@@ -13,7 +13,7 @@ namespace FftImplementation
     {
       this.size = size;
 
-      this.arrangement = this.GetArrangement(Enumerable.Range(0, size).ToArray());
+      arrangement = GetArrangement(Enumerable.Range(0, size).ToArray());
     }
 
     internal Complex[] Transform(Complex[] coefficients)
@@ -23,7 +23,7 @@ namespace FftImplementation
         throw new ArgumentException("Data of wrong size.", nameof(coefficients));
       }
 
-      var unaranged = this.TransformStep(coefficients);
+      var unaranged = TransformStep(coefficients);
 
       return arrangement.Select(i => unaranged[i]).ToArray();
     }
@@ -59,7 +59,7 @@ namespace FftImplementation
 
     internal Complex[] Imvert(Complex[] wave)
     {
-      return this.Transform(wave).Select(value => value / size).ToArray();
+      return Transform(wave).Select(value => value / size).ToArray();
     }
   }
 }

@@ -1,8 +1,10 @@
-﻿using OxyPlot;
+﻿using FftImplementation.Services;
+using OxyPlot;
 using OxyPlot.Series;
 using OxyPlotWindows;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Numerics;
 
@@ -38,16 +40,20 @@ namespace FftImplementation
       //DrawGraph(coefficients.Select(c => new DataPoint(i++, c.Real)));
 
       var fft = new Fft(n);
+      var watch = new Stopwatch();
+      watch.Start();
       var wave = fft.Transform(coefficients).ToArray();
       //var wave = Enumerable.Range(0, n).Select(index => new Complex(Math.Sin(index * 100.0 / n)
       //  + Math.Sin(index * 3.0 / n)
       //  + Math.Sin(index * 700.0 / n)
       //  + Math.Sin(index * 8000.0 / n), 0)).ToArray();
+      watch.Stop();
+      Console.WriteLine(watch.Elapsed.ToString());
 
       i = 0;
       DrawGraph(wave.Select(c => new DataPoint(i++, c.Real)));
 
-      var spectrum = fft.Inverse(wave);
+      var spectrum = fft.Imvert(wave);
 
       i = 0;
       DrawGraph(spectrum.Select(c => new DataPoint(i++, c.Real)));

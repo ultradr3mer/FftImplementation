@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D835AA5D-1A36-4337-87FF-8C470AF035E2}</ProjectGuid>
+    <ProjectGuid>{1812E708-B50B-4ADC-A6BA-FCFFA739D5EC}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>OxyPlotWindows</RootNamespace>
-    <AssemblyName>OxyPlotWindows</AssemblyName>
+    <RootNamespace>Fft.Wpf</RootNamespace>
+    <AssemblyName>Fft.Wpf</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -38,6 +38,12 @@
     <Reference Include="Microsoft.Win32.Registry, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Win32.Registry.4.7.0\lib\net461\Microsoft.Win32.Registry.dll</HintPath>
     </Reference>
+    <Reference Include="NAudio, Version=2.1.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.2.1.0\lib\net472\NAudio.dll</HintPath>
+    </Reference>
+    <Reference Include="NAudio.Asio, Version=2.1.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
+      <HintPath>..\packages\NAudio.Asio.2.1.0\lib\netstandard2.0\NAudio.Asio.dll</HintPath>
+    </Reference>
     <Reference Include="NAudio.Core, Version=2.1.0.0, Culture=neutral, PublicKeyToken=e279aa5131008a41, processorArchitecture=MSIL">
       <HintPath>..\packages\NAudio.Core.2.1.0\lib\netstandard2.0\NAudio.Core.dll</HintPath>
     </Reference>
@@ -65,6 +71,7 @@
     <Reference Include="ReachFramework" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Numerics" />
     <Reference Include="System.Printing" />
     <Reference Include="System.Security.AccessControl, Version=4.1.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.AccessControl.4.7.0\lib\net461\System.Security.AccessControl.dll</HintPath>
@@ -90,28 +97,22 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Visualizer.cs" />
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
+    <Compile Include="Services\Fft.cs" />
+    <Compile Include="Services\Io.cs" />
+    <Compile Include="ViewModels\PlotViewModel.cs" />
+    <Compile Include="Views\PlotView.xaml.cs">
+      <DependentUpon>PlotView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-      <SubType>Code</SubType>
-    </Compile>
-    <Page Include="PlotWindow.xaml">
+    <Page Include="Views\PlotView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="PlotWindow.xaml.cs">
-      <DependentUpon>PlotWindow.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -138,5 +139,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
