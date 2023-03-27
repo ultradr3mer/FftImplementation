@@ -13,7 +13,7 @@ namespace FftImplementation
     {
       this.size = size;
 
-      this.arrangement = this.GetArrangement(Enumerable.Range(0, size).Reverse().ToArray());
+      this.arrangement = this.GetArrangement(Enumerable.Range(0, size).ToArray());
     }
 
     internal Complex[] Transform(Complex[] coefficients)
@@ -25,8 +25,7 @@ namespace FftImplementation
 
       var unaranged = this.TransformStep(coefficients);
 
-      var sizeSqrt = Math.Sqrt(size);
-      return arrangement.Select(i => unaranged[i] / sizeSqrt).ToArray();
+      return arrangement.Select(i => unaranged[i]).ToArray();
     }
 
     private int[] GetArrangement(int[] indices)
@@ -50,10 +49,17 @@ namespace FftImplementation
       var w = Complex.Pow(Math.E, new Complex(0, 2 * Math.PI / coefficients.Length));
       int segmentSize = coefficients.Length / 2;
 
-      var top = TransformStep(Enumerable.Range(0, segmentSize).Select(i => coefficients[i] + coefficients[i + segmentSize]).ToArray());
-      var bottom = TransformStep(Enumerable.Range(0, segmentSize).Select(i => Complex.Pow(w, i) * (coefficients[i] - coefficients[i + segmentSize])).ToArray());
+      var top = TransformStep(Enumerable.Range(0, segmentSize)
+        .Select(i => coefficients[i] + coefficients[i + segmentSize]).ToArray());
+      var bottom = TransformStep(Enumerable.Range(0, segmentSize)
+        .Select(i => Complex.Pow(w, i) * (coefficients[i] - coefficients[i + segmentSize])).ToArray());
 
       return top.Concat(bottom).ToArray();
+    }
+
+    internal Complex[] Inverse(Complex[] wave)
+    {
+      return this.Transform(wave).Select(value => value / size).ToArray();
     }
   }
 }
